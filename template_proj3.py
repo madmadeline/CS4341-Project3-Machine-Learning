@@ -1,6 +1,7 @@
 from tensorflow import keras
 from keras.models import Sequential
 from keras.layers import Dense, Activation
+from random import randrange
 import numpy as np
 
 # Model Template
@@ -30,6 +31,39 @@ for i in range(0, 650):
     images_0.put(i, images[i])
 
 print(images_0)
+
+#
+#
+# OFFICE HOURS PSEUDOCODE
+#
+#
+
+# Generate random var between 0 and 100 for each index, if >=60 for example, put BOTH image and label into training set
+# Training Set: 60%
+training_images = np.ndarray(shape=(650, 784))
+training_labels = np.ndarray(shape=(650, 784))
+# Validation Set: 15%
+validation_images = np.ndarray(shape=(650, 784))
+validation_labels = np.ndarray(shape=(650, 784))
+# Test Set: 25%
+test_images = np.ndarray(shape=(650, 784))
+test_labels = np.ndarray(shape=(650, 784))
+
+# for i in range (0, 6500):
+#     rand = randrange(100)
+#     if rand < 60:
+#         # put it in the training set
+#         training_images.put()
+#         training_labels.put()
+#     else if rand >=60 && < 75:
+#         # put it in the validation set
+#         validation_images.put()
+#         validation_labels.put()
+#     else:
+#         # put it in the test set
+#         test_images.put()
+#         test_labels.put()
+
 #
 #
 #
