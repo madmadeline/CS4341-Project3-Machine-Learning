@@ -23,17 +23,29 @@ one_hot_labels = keras.utils.to_categorical(labels, num_classes=10)  # Convert l
 # labels are organized in order from 0 -> 9, so the 650th index is the first '1' label
 print(labels[0], labels[650], labels[1300])
 
+# Separate Data
+images_0 = np.ndarray(shape=(650, 784))
 
+for i in range(0, 650):
+    images_0.put(i, images[i])
+
+print(images_0)
 #
 #
 #
 # Fill in Model Here
 #
 #
+model.add(Dense(10))
+model.add(Dense(10))
+model.add(Dense(10))
+model.add(Dense(10))
+model.add(Dense(10))
+model.add(Dense(10))
 
-
-# End Custom Code
-
+"""
+End Custom Code
+"""
 # Add last layer and "activate"
 model.add(Dense(10, kernel_initializer='he_normal')) # last layer
 model.add(Activation('softmax'))
