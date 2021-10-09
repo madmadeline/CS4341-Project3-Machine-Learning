@@ -7,7 +7,7 @@ import numpy as np
 # Model Template
 
 model = Sequential()  # declare model
-model.add(Dense(10, input_shape=(28*28, ), kernel_initializer='he_normal'))  # first layer
+model.add(Dense(10, input_shape=(28 * 28,), kernel_initializer='he_normal'))  # first layer
 model.add(Activation('relu'))
 
 """
@@ -22,32 +22,17 @@ np.reshape(images, (6500, 784))  # Turn image matrices into vectors
 one_hot_labels = keras.utils.to_categorical(labels, num_classes=10)  # Convert label integers to one-hot encodings
 
 # labels are organized in order from 0 -> 9, so the 650th index is the first '1' label
-# print(labels[0], labels[650], labels[1300])
-
-# Separate Data
-# images_0 = np.ndarray(shape=(650, 784))
-#
-# for i in range(0, 650):
-#     images_0.put(i, images[i])
-
-# print(images_0)
-
-#
-#
-# OFFICE HOURS PSEUDOCODE
-#
-#
 
 # Generate random var between 0 and 100 for each index, if >=60 for example, put BOTH image and label into training set
 # Training Set: 60%
-training_images = np.ndarray(shape=(650, 784))
-training_labels = np.ndarray(shape=(650, 784))
+training_images = np.ndarray(shape=(3900, 784))
+training_labels = np.ndarray(shape=(3900, 10))
 # Validation Set: 15%
-validation_images = np.ndarray(shape=(650, 784))
-validation_labels = np.ndarray(shape=(650, 784))
+validation_images = np.ndarray(shape=(975, 784))
+validation_labels = np.ndarray(shape=(975, 10))
 # Test Set: 25%
-test_images = np.ndarray(shape=(650, 784))
-test_labels = np.ndarray(shape=(650, 784))
+test_images = np.ndarray(shape=(1625, 784))
+test_labels = np.ndarray(shape=(1625, 10))
 
 for i in range(0, 6500):
     rand = randrange(0, 100)
@@ -72,7 +57,6 @@ for i in range(0, 6500):
 #
 model.add(Dense(10))
 
-
 """
 End Custom Code
 """
@@ -83,16 +67,15 @@ model.add(Activation('softmax'))
 print("Compiling the model")
 # Compile Model
 model.compile(optimizer='sgd',
-              loss='categorical_crossentropy', 
+              loss='categorical_crossentropy',
               metrics=['accuracy'])
 
 print("Training the model")
 # Train Model
 history = model.fit(training_images, training_labels,
-                    validation_data = (validation_images, validation_labels),
-                    epochs=10, 
+                    validation_data=(validation_images, validation_labels),
+                    epochs=10,
                     batch_size=512)
-
 
 # Report Results
 
