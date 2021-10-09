@@ -34,20 +34,27 @@ validation_labels = np.ndarray(shape=(975, 10))
 test_images = np.ndarray(shape=(1625, 784))
 test_labels = np.ndarray(shape=(1625, 10))
 
+training_counter = 0
+validation_counter = 0
+test_counter = 0
+
 for i in range(0, 6500):
     rand = randrange(0, 100)
     if rand < 60:
         # put it in the training set
-        training_images.put(i, images[i])
-        training_labels.put(i, one_hot_labels[i])
+        training_images.put(training_counter, images[i])
+        training_labels.put(training_counter, one_hot_labels[i])
+        training_counter += 1
     elif 60 <= rand < 75:
         # put it in the validation set
-        validation_images.put(i, images[i])
-        validation_labels.put(i, one_hot_labels[i])
+        validation_images.put(validation_counter, images[i])
+        validation_labels.put(validation_counter, one_hot_labels[i])
+        validation_counter += 1
     else:
         # put it in the test set
-        test_images.put(i, images[i])
-        test_labels.put(i, one_hot_labels[i])
+        test_images.put(test_counter, images[i])
+        test_labels.put(test_counter, one_hot_labels[i])
+        test_counter += 1
 
 #
 #
@@ -55,7 +62,9 @@ for i in range(0, 6500):
 # Fill in Model Here
 #
 #
-model.add(Dense(10))
+model.add(Dense(500))
+model.add(Dense(500))
+model.add(Dense(500))
 
 """
 End Custom Code
@@ -80,4 +89,4 @@ history = model.fit(training_images, training_labels,
 # Report Results
 
 print(history.history)
-model.predict()
+model.predict(test_images)
