@@ -28,12 +28,19 @@ one_hot_labels = keras.utils.to_categorical(labels, num_classes=10)  # Convert l
 # Training Set: 60%
 training_images = np.zeros(shape=(3900, 784))
 training_labels = np.zeros(shape=(3900, 10))
+t_i_l = []
+t_l_l = []
 # Validation Set: 15%
 validation_images = np.zeros(shape=(975, 784))
 validation_labels = np.zeros(shape=(975, 10))
+v_i_l = []
+v_l_l = []
+
 # Test Set: 25%
 test_images = np.zeros(shape=(1625, 784))
 test_labels = np.zeros(shape=(1625, 10))
+te_i_l = []
+te_l_l = []
 
 training_counter = 0
 validation_counter = 0
@@ -46,21 +53,36 @@ for i in range(0, 6500):
     rand = randrange(0, 100)
     if rand < 60:
         # put it in the training set
-        training_images = np.insert(training_images, training_counter, images[i], 0)
-        training_labels = np.insert(training_labels, training_counter, one_hot_labels[i], 0)
-        training_counter += 1
+        t_i_l.append(images[i])
+        t_l_l.append(one_hot_labels[i])
+        # training_images = np.insert(training_images, training_counter, images[i], 0)
+        # training_labels = np.insert(training_labels, training_counter, one_hot_labels[i], 0)
+        # training_counter += 1
     elif 60 <= rand < 75:
         # put it in the validation set
-        validation_images = np.insert(validation_images, validation_counter, images[i], 0)
-        validation_labels = np.insert(validation_labels, validation_counter, one_hot_labels[i], 0)
-        validation_counter += 1
+        # validation_images = np.insert(validation_images, validation_counter, images[i], 0)
+        # validation_labels = np.insert(validation_labels, validation_counter, one_hot_labels[i], 0)
+        # validation_counter += 1
+        v_i_l.append(images[i])
+        v_l_l.append(one_hot_labels[i])
     else:
         # put it in the test set
-        test_images = np.insert(test_images, test_counter, images[i], 0)
-        test_labels = np.insert(test_labels, test_counter, one_hot_labels[i], 0)
-        test_counter += 1
+        # test_images = np.insert(test_images, test_counter, images[i], 0)
+        # test_labels = np.insert(test_labels, test_counter, one_hot_labels[i], 0)
+        # test_counter += 1
+        te_i_l.append(images[i])
+        te_l_l.append(one_hot_labels[i])
 
 print("Done Sampling")
+
+training_images = np.array(t_i_l)
+training_labels = np.array(t_l_l)
+
+validation_images = np.array(v_i_l)
+validation_labels = np.array(v_l_l)
+
+test_images = np.array(te_i_l)
+test_labels = np.array(te_l_l)
 
 #
 #
@@ -69,6 +91,7 @@ print("Done Sampling")
 #
 model.add(Dense(10))
 model.add(Dense(10))
+
 
 
 """
