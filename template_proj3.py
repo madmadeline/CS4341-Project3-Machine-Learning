@@ -1,4 +1,4 @@
-from tensorflow import keras
+from tensorflow import keras, optimizers
 from keras.models import Sequential
 from keras.layers import Dense, Activation
 from random import randrange
@@ -91,7 +91,12 @@ test_labels = np.array(te_l_l)
 #
 model.add(Dense(10))
 model.add(Dense(10))
-
+model.add(Dense(10))
+model.add(Dense(10))
+model.add(Dense(10))
+model.add(Dense(10))
+model.add(Dense(10))
+model.add(Dense(10))
 
 
 """
@@ -99,10 +104,11 @@ End Custom Code
 """
 # Add last layer and "activate"
 model.add(Dense(10, kernel_initializer='he_normal'))  # last layer
-model.add(Activation('softmax'))
+model.add(Activation('sigmoid'))
 
 print("Compiling the model")
 # Compile Model
+sgd = optimizers.SGD(learning_rate=0.01, decay=1e-6, momentum=0.9, nesterov=True)
 model.compile(optimizer='sgd',
               loss='categorical_crossentropy',
               metrics=['accuracy'])
@@ -111,13 +117,13 @@ print("Training the model")
 # Train Model
 history = model.fit(training_images, training_labels,
                     validation_data=(validation_images, validation_labels),
-                    epochs=10,
-                    batch_size=512)
+                    epochs=50,
+                    batch_size=1024)
 
 # Report Results
 
 print(history.history)
-predictions = model.predict(test_images)
+predictions = model.predict(test_images, 1024)
 
 print("Actual: ", test_labels)
 print("Predicted: ", predictions)
