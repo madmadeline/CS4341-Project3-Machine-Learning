@@ -123,11 +123,15 @@ test_labels = np.array(te_l_l)
 #
 #
 
-model.add(Dense(256, kernel_initializer=RandomNormal(0.0, 0.10, 1), activation='relu'))
-model.add(Dense(128, kernel_initializer=RandomNormal(0.0, 0.10, 1), activation='relu'))
+model.add(Dense(16, kernel_initializer=RandomNormal(0.0, 0.10, 1), activation='relu'))
+model.add(Dense(32, kernel_initializer=RandomNormal(0.0, 0.10, 1), activation='relu'))
+model.add(Dense(64, kernel_initializer=RandomNormal(0.0, 0.10, 1), activation='relu'))
+model.add(Dense(128, kernel_initializer=RandomNormal(0.0, 0.10, 1), activation='softplus'))
+model.add(Dense(128, kernel_initializer=RandomNormal(0.0, 0.10, 1), activation='softplus'))
 model.add(Dense(64, kernel_initializer=RandomNormal(0.0, 0.10, 1), activation='relu'))
 model.add(Dense(32, kernel_initializer=RandomNormal(0.0, 0.10, 1), activation='relu'))
 model.add(Dense(16, kernel_initializer=RandomNormal(0.0, 0.10, 1), activation='relu'))
+
 
 """
 End Custom Code
@@ -146,8 +150,8 @@ print("Training the model")
 # Train Model
 history = model.fit(training_images, training_labels,
                     validation_data=(validation_images, validation_labels),
-                    epochs=250,
-                    batch_size=512)
+                    epochs=100, # have at least 100 epochs?
+                    batch_size=25)
 
 # Report Results
 
@@ -158,7 +162,8 @@ test_labels = np.argmax(test_labels, axis=-1)
 print("Actual:", test_labels)
 print("Predicted: ", predictions)
 
-conf_matrix = confusion_matrix(test_labels, predictions,
-                               labels=[0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+name_labels = ["T-shirt/top", "Trouser", "Pullover", "Dress", "Coat", "Sandal", "Shirt", "Sneaker", "Bag", "Ankle boot"]
+
+conf_matrix = confusion_matrix(test_labels, predictions, labels=[0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
 
 print(conf_matrix)
