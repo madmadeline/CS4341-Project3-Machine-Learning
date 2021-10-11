@@ -4,6 +4,7 @@ from keras.layers import Dense, Activation
 from random import randrange
 from sklearn.metrics import confusion_matrix
 import numpy as np
+from keras.initializers import RandomNormal
 
 
 # Print iterations progress
@@ -112,8 +113,17 @@ test_labels = np.array(te_l_l)
 # Fill in Model Here
 #
 #
-model.add(Dense(10))
-model.add(Dense(10))
+"""
+model.add(Dense(64))
+model.add(Dense(64))
+model.add(Dense(64))
+model.add(Dense(64))
+"""
+
+Dense(32, kernel_initializer=RandomNormal(0.0, 0.10, 1), activation='relu')
+Dense(32, kernel_initializer=RandomNormal(0.0, 0.10, 1), activation='relu')
+Dense(32, kernel_initializer=RandomNormal(0.0, 0.10, 1), activation='relu')
+Dense(32, kernel_initializer=RandomNormal(0.0, 0.10, 1), activation='relu')
 
 
 
@@ -134,7 +144,7 @@ print("Training the model")
 # Train Model
 history = model.fit(training_images, training_labels,
                     validation_data=(validation_images, validation_labels),
-                    epochs=10,
+                    epochs=10, # have at least 100 epochs?
                     batch_size=512)
 
 # Report Results
