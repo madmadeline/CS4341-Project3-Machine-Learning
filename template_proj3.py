@@ -123,6 +123,9 @@ test_labels = np.array(te_l_l)
 #
 #
 
+model.add(Dense(2048, kernel_initializer=RandomNormal(0.0, 0.10, 1), activation='relu'))
+model.add(Dense(1024, kernel_initializer=RandomNormal(0.0, 0.10, 1), activation='relu'))
+model.add(Dense(512, kernel_initializer=RandomNormal(0.0, 0.10, 1), activation='relu'))
 model.add(Dense(256, kernel_initializer=RandomNormal(0.0, 0.10, 1), activation='relu'))
 model.add(Dense(128, kernel_initializer=RandomNormal(0.0, 0.10, 1), activation='relu'))
 model.add(Dense(64, kernel_initializer=RandomNormal(0.0, 0.10, 1), activation='relu'))
