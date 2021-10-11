@@ -7,8 +7,16 @@ import numpy as np
 from keras.initializers import RandomNormal
 
 
+#
+#
+# GOOGLE DOC LINK : https://docs.google.com/document/d/1BqBpj9MXUmbnHLMPu5271j1NysZdKb8uq_t9bZFRKgY/edit?usp=sharing
+#
+#
+
+
+
 # Print iterations progress
-def printProgressBar (iteration, total, prefix = '', suffix = '', decimals = 1, length = 100, fill = ' ', printEnd = "\r"):
+def printProgressBar(iteration, total, prefix='', suffix='', decimals=1, length=100, fill=' ', printEnd="\r"):
     """
     Call in a loop to create terminal progress bar
     @params:
@@ -24,10 +32,11 @@ def printProgressBar (iteration, total, prefix = '', suffix = '', decimals = 1, 
     percent = ("{0:." + str(decimals) + "f}").format(100 * (iteration / float(total)))
     filledLength = int(length * iteration // total)
     bar = fill * filledLength + '-' * (length - filledLength)
-    print(f'\r{prefix} |{bar}| {percent}% {suffix}', end = printEnd)
+    print(f'\r{prefix} |{bar}| {percent}% {suffix}', end=printEnd)
     # Print New Line on Complete
     if iteration == total:
         print()
+
 
 # Model Template
 
@@ -113,19 +122,12 @@ test_labels = np.array(te_l_l)
 # Fill in Model Here
 #
 #
-"""
-model.add(Dense(64))
-model.add(Dense(64))
-model.add(Dense(64))
-model.add(Dense(64))
-"""
 
-Dense(32, kernel_initializer=RandomNormal(0.0, 0.10, 1), activation='relu')
-Dense(32, kernel_initializer=RandomNormal(0.0, 0.10, 1), activation='relu')
-Dense(32, kernel_initializer=RandomNormal(0.0, 0.10, 1), activation='relu')
-Dense(32, kernel_initializer=RandomNormal(0.0, 0.10, 1), activation='relu')
-
-
+model.add(Dense(256, kernel_initializer=RandomNormal(0.0, 0.10, 1), activation='relu'))
+model.add(Dense(128, kernel_initializer=RandomNormal(0.0, 0.10, 1), activation='relu'))
+model.add(Dense(64, kernel_initializer=RandomNormal(0.0, 0.10, 1), activation='relu'))
+model.add(Dense(32, kernel_initializer=RandomNormal(0.0, 0.10, 1), activation='relu'))
+model.add(Dense(16, kernel_initializer=RandomNormal(0.0, 0.10, 1), activation='relu'))
 
 """
 End Custom Code
@@ -144,17 +146,19 @@ print("Training the model")
 # Train Model
 history = model.fit(training_images, training_labels,
                     validation_data=(validation_images, validation_labels),
-                    epochs=10, # have at least 100 epochs?
+                    epochs=250,
                     batch_size=512)
 
 # Report Results
 
 print(history.history)
-predictions = model.predict(test_images)
+predictions = np.argmax(model.predict(test_images), axis=-1)
 
+test_labels = np.argmax(test_labels, axis=-1)
 print("Actual:", test_labels)
 print("Predicted: ", predictions)
 
-conf_matrix = confusion_matrix(test_labels, predictions, labels=["T-shirt/top", "Trouser", "Pullover", "Dress", "Coat", "Sandal", "Shirt", "Sneaker", "Bag", "Ankle boot"])
+conf_matrix = confusion_matrix(test_labels, predictions,
+                               labels=[0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
 
 print(conf_matrix)
