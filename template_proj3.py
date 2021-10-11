@@ -1,9 +1,33 @@
-from tensorflow import keras, optimizers
+from tensorflow import keras
 from keras.models import Sequential
 from keras.layers import Dense, Activation
 from random import randrange
 from sklearn.metrics import confusion_matrix
 import numpy as np
+from keras.initializers import RandomNormal
+
+
+# Print iterations progress
+def printProgressBar (iteration, total, prefix = '', suffix = '', decimals = 1, length = 100, fill = ' ', printEnd = "\r"):
+    """
+    Call in a loop to create terminal progress bar
+    @params:
+        iteration   - Required  : current iteration (Int)
+        total       - Required  : total iterations (Int)
+        prefix      - Optional  : prefix string (Str)
+        suffix      - Optional  : suffix string (Str)
+        decimals    - Optional  : positive number of decimals in percent complete (Int)
+        length      - Optional  : character length of bar (Int)
+        fill        - Optional  : bar fill character (Str)
+        printEnd    - Optional  : end character (e.g. "\r", "\r\n") (Str)
+    """
+    percent = ("{0:." + str(decimals) + "f}").format(100 * (iteration / float(total)))
+    filledLength = int(length * iteration // total)
+    bar = fill * filledLength + '-' * (length - filledLength)
+    print(f'\r{prefix} |{bar}| {percent}% {suffix}', end = printEnd)
+    # Print New Line on Complete
+    if iteration == total:
+        print()
 
 # Model Template
 
@@ -89,14 +113,18 @@ test_labels = np.array(te_l_l)
 # Fill in Model Here
 #
 #
-model.add(Dense(10))
-model.add(Dense(10))
-model.add(Dense(10))
-model.add(Dense(10))
-model.add(Dense(10))
-model.add(Dense(10))
-model.add(Dense(10))
-model.add(Dense(10))
+"""
+model.add(Dense(64))
+model.add(Dense(64))
+model.add(Dense(64))
+model.add(Dense(64))
+"""
+
+Dense(32, kernel_initializer=RandomNormal(0.0, 0.10, 1), activation='relu')
+Dense(32, kernel_initializer=RandomNormal(0.0, 0.10, 1), activation='relu')
+Dense(32, kernel_initializer=RandomNormal(0.0, 0.10, 1), activation='relu')
+Dense(32, kernel_initializer=RandomNormal(0.0, 0.10, 1), activation='relu')
+
 
 
 """
@@ -104,11 +132,10 @@ End Custom Code
 """
 # Add last layer and "activate"
 model.add(Dense(10, kernel_initializer='he_normal'))  # last layer
-model.add(Activation('sigmoid'))
+model.add(Activation('softmax'))
 
 print("Compiling the model")
 # Compile Model
-sgd = optimizers.SGD(learning_rate=0.01, decay=1e-6, momentum=0.9, nesterov=True)
 model.compile(optimizer='sgd',
               loss='categorical_crossentropy',
               metrics=['accuracy'])
@@ -117,15 +144,15 @@ print("Training the model")
 # Train Model
 history = model.fit(training_images, training_labels,
                     validation_data=(validation_images, validation_labels),
-                    epochs=50,
-                    batch_size=1024)
+                    epochs=10, # have at least 100 epochs?
+                    batch_size=512)
 
 # Report Results
 
 print(history.history)
-predictions = model.predict(test_images, 1024)
+predictions = model.predict(test_images)
 
-print("Actual: ", test_labels)
+print("Actual:", test_labels)
 print("Predicted: ", predictions)
 
 conf_matrix = confusion_matrix(test_labels, predictions, labels=["T-shirt/top", "Trouser", "Pullover", "Dress", "Coat", "Sandal", "Shirt", "Sneaker", "Bag", "Ankle boot"])
