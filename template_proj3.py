@@ -158,7 +158,7 @@ for i in range(len(test_labels)):
     if predictions[i] != test_labels[i]:
         confused_images.append(test_images[i])
 
-print(confused_images)
+# print(confused_images)
 f = open("confused_images.txt", "a")
 for image in confused_images:
     f.write(str(image))
