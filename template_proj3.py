@@ -88,21 +88,12 @@ for i in range(0, 6500):
         # put it in the training set
         t_i_l.append(images[i])
         t_l_l.append(one_hot_labels[i])
-        # training_images = np.insert(training_images, training_counter, images[i], 0)
-        # training_labels = np.insert(training_labels, training_counter, one_hot_labels[i], 0)
-        # training_counter += 1
     elif 60 <= rand < 75:
         # put it in the validation set
-        # validation_images = np.insert(validation_images, validation_counter, images[i], 0)
-        # validation_labels = np.insert(validation_labels, validation_counter, one_hot_labels[i], 0)
-        # validation_counter += 1
         v_i_l.append(images[i])
         v_l_l.append(one_hot_labels[i])
     else:
         # put it in the test set
-        # test_images = np.insert(test_images, test_counter, images[i], 0)
-        # test_labels = np.insert(test_labels, test_counter, one_hot_labels[i], 0)
-        # test_counter += 1
         te_i_l.append(images[i])
         te_l_l.append(one_hot_labels[i])
 
@@ -162,6 +153,17 @@ test_labels = np.argmax(test_labels, axis=-1)
 print("Actual:", test_labels)
 print("Predicted: ", predictions)
 
+confused_images = []
+for i in range(len(test_labels)):
+    if predictions[i] != test_labels[i]:
+        confused_images.append(test_images[i])
+
+print(confused_images)
+f = open("confused_images.txt", "a")
+for image in confused_images:
+    f.write(str(image))
+f.close()
+
 name_labels = ["T-shirt/top", "Trouser", "Pullover", "Dress", "Coat", "Sandal", "Shirt", "Sneaker", "Bag", "Ankle boot"]
 
 conf_matrix = confusion_matrix(test_labels, predictions, labels=[0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
@@ -169,7 +171,7 @@ conf_matrix = confusion_matrix(test_labels, predictions, labels=[0, 1, 2, 3, 4, 
 print(conf_matrix)
 
 decision = input("Save Model? (Y/N): ")
-if (decision == "Y"):
+if decision == "Y":
     model.save('./saved-model')
 else:
     print("Not saving this model, goodbye!")
