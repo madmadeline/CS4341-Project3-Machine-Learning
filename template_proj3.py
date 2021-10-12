@@ -167,3 +167,9 @@ name_labels = ["T-shirt/top", "Trouser", "Pullover", "Dress", "Coat", "Sandal", 
 conf_matrix = confusion_matrix(test_labels, predictions, labels=[0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
 
 print(conf_matrix)
+
+decision = input("Save Model? (Y/N): ")
+if (decision == "Y"):
+    model.save('./saved-model')
+else:
+    print("Not saving this model, goodbye!")
