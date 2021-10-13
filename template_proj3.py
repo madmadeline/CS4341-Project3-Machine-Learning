@@ -7,37 +7,6 @@ import numpy as np
 from keras.initializers import RandomNormal
 
 
-#
-#
-# GOOGLE DOC LINK : https://docs.google.com/document/d/1BqBpj9MXUmbnHLMPu5271j1NysZdKb8uq_t9bZFRKgY/edit?usp=sharing
-#
-#
-
-
-
-# Print iterations progress
-def printProgressBar(iteration, total, prefix='', suffix='', decimals=1, length=100, fill=' ', printEnd="\r"):
-    """
-    Call in a loop to create terminal progress bar
-    @params:
-        iteration   - Required  : current iteration (Int)
-        total       - Required  : total iterations (Int)
-        prefix      - Optional  : prefix string (Str)
-        suffix      - Optional  : suffix string (Str)
-        decimals    - Optional  : positive number of decimals in percent complete (Int)
-        length      - Optional  : character length of bar (Int)
-        fill        - Optional  : bar fill character (Str)
-        printEnd    - Optional  : end character (e.g. "\r", "\r\n") (Str)
-    """
-    percent = ("{0:." + str(decimals) + "f}").format(100 * (iteration / float(total)))
-    filledLength = int(length * iteration // total)
-    bar = fill * filledLength + '-' * (length - filledLength)
-    print(f'\r{prefix} |{bar}| {percent}% {suffix}', end=printEnd)
-    # Print New Line on Complete
-    if iteration == total:
-        print()
-
-
 # Model Template
 
 model = Sequential()  # declare model
@@ -79,10 +48,8 @@ training_counter = 0
 validation_counter = 0
 test_counter = 0
 
-# printProgressBar(0, 6500, prefix='Sampling:', suffix='Complete', length=50)
 print("Starting Stratified Sampling")
 for i in range(0, 6500):
-    # printProgressBar(i + 1, 6500, prefix='Sampling:', suffix='Complete', length=50)
     rand = randrange(0, 100)
     if rand < 60:
         # put it in the training set
